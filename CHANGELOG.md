@@ -5,7 +5,7 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
-## [0.1.0] - unreleased
+## [0.1.0] - 2026-10-23
 
 ### Added
 
@@ -15,3 +15,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - **widgets:** space weather now (Kp gauge, G / S / R, solar wind, Bz, X-rays, Kp observed and expected), the aurora forecast of a house, and the last SWPC messages with a short translated title
 - **configuration:** language of the texts, aurora threshold, a "Test the connection" button and a "Diagnostic" button
 - **i18n:** English, French, German and Spanish for the manifest, the runtime texts, the documentation and the README
+
+[0.1.0]: https://github.com/William-De71/gladys-noaa-space-weather/releases/tag/v0.1.0
