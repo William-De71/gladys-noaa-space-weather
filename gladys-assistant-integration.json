@@ -1,0 +1,1983 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "NOAA Space Weather",
+  "description": {
+    "en": "Space weather of the NOAA SWPC: Kp, storms, solar flares, aurora forecast and alerts.",
+    "fr": "Météo spatiale du SWPC (NOAA) : Kp, orages, éruptions solaires, aurores et alertes.",
+    "de": "Weltraumwetter des NOAA SWPC: Kp, Stürme, Sonneneruptionen, Polarlichter und Warnungen.",
+    "es": "Clima espacial del SWPC (NOAA): Kp, tormentas, fulguraciones, auroras y alertas."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-noaa-space-weather:0.1.0",
+  "gladys_version": ">=5.1.0",
+  "categories": ["environment"],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-noaa-space-weather/main/cover.jpg",
+  "transports": ["cloud"],
+  "location": true,
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Data of the NOAA SWPC",
+        "fr": "Données du SWPC de la NOAA",
+        "de": "Daten des NOAA SWPC",
+        "es": "Datos del SWPC de la NOAA"
+      },
+      "description": {
+        "en": "The Space Weather Prediction Center of the NOAA publishes its observations and forecasts for free, without an account or a key: nothing to fill in. The integration reads them from services.swpc.noaa.gov (cloud), at the pace of each product, and keeps a small cache in its data folder. The data are in the public domain; credit: NOAA SWPC. This integration is not affiliated with the NOAA.",
+        "fr": "Le Space Weather Prediction Center de la NOAA publie gratuitement ses observations et prévisions, sans compte ni clé : rien à saisir. L’intégration les lit sur services.swpc.noaa.gov (cloud), au rythme de chaque produit, et garde un petit cache dans son dossier de données. Les données sont du domaine public ; crédit : NOAA SWPC. Cette intégration n’est pas affiliée à la NOAA.",
+        "de": "Das Space Weather Prediction Center der NOAA veröffentlicht seine Beobachtungen und Vorhersagen kostenlos, ohne Konto und ohne Schlüssel: Es gibt nichts einzutragen. Die Integration liest sie von services.swpc.noaa.gov (Cloud), im Takt jedes Produkts, und behält einen kleinen Cache in ihrem Datenordner. Die Daten sind gemeinfrei; Quelle: NOAA SWPC. Diese Integration ist nicht mit der NOAA verbunden.",
+        "es": "El Space Weather Prediction Center de la NOAA publica gratis sus observaciones y previsiones, sin cuenta ni clave: no hay nada que rellenar. La integración las lee en services.swpc.noaa.gov (nube), al ritmo de cada producto, y guarda una pequeña caché en su carpeta de datos. Los datos son de dominio público; crédito: NOAA SWPC. Esta integración no está afiliada a la NOAA."
+      },
+      "links": [
+        {
+          "url": "https://www.swpc.noaa.gov/",
+          "label": {
+            "en": "NOAA SWPC",
+            "fr": "SWPC de la NOAA",
+            "de": "NOAA SWPC",
+            "es": "SWPC de la NOAA"
+          }
+        },
+        {
+          "url": "https://www.swpc.noaa.gov/noaa-scales-explanation",
+          "label": {
+            "en": "The NOAA scales G, S, R",
+            "fr": "Les échelles NOAA G, S, R",
+            "de": "Die NOAA-Skalen G, S, R",
+            "es": "Las escalas NOAA G, S, R"
+          }
+        }
+      ]
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "default": "auto",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Device names, scene texts and errors. Automatic: the language of the last widget shown.",
+        "fr": "Noms des appareils, textes et erreurs des scènes. Automatique : la langue du dernier widget affiché.",
+        "de": "Gerätenamen, Texte und Fehler der Szenen. Automatisch: die Sprache des zuletzt angezeigten Widgets.",
+        "es": "Nombres de los dispositivos, textos y errores de las escenas. Automático: el idioma del último widget mostrado."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "English",
+            "de": "English",
+            "es": "English"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "Français",
+            "fr": "Français",
+            "de": "Français",
+            "es": "Français"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "Deutsch",
+            "fr": "Deutsch",
+            "de": "Deutsch",
+            "es": "Deutsch"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Español",
+            "fr": "Español",
+            "de": "Español",
+            "es": "Español"
+          }
+        }
+      ]
+    },
+    {
+      "key": "aurora",
+      "type": "section",
+      "label": {
+        "en": "Aurora",
+        "fr": "Aurores",
+        "de": "Polarlicht",
+        "es": "Auroras"
+      },
+      "description": {
+        "en": "Each house of Gladys with a location gets an Aurora device on the Discovery screen: create it for the houses you want. The forecast (OVATION, a file of about 1 MB) is only read while such a device exists or an aurora widget is shown. The probability is the one of an aurora overhead, the highest of the nine cells of 1° around the house, and \"night\" means the sun more than 6° below the horizon. Below about 55° of latitude, as in most of France, an aurora is rare: only strong storms (G3 or more) bring it there.",
+        "fr": "Chaque maison de Gladys localisée reçoit un appareil Aurores dans l’écran de découverte : créez-le pour les maisons voulues. La prévision (OVATION, un fichier d’environ 1 Mo) n’est lue que si un tel appareil existe ou si un widget aurore est affiché. La probabilité est celle d’une aurore au zénith, la plus haute des neuf cases de 1° autour de la maison, et « nuit » signifie le soleil à plus de 6° sous l’horizon. Sous 55° de latitude environ, comme dans la plupart de la France, une aurore est rare : seuls les orages forts (G3 ou plus) l’y amènent.",
+        "de": "Jedes Zuhause in Gladys mit Standort erhält ein Polarlicht-Gerät im Bildschirm „Entdecken“: Erstelle es für die gewünschten Zuhause. Die Vorhersage (OVATION, eine Datei von etwa 1 MB) wird nur gelesen, solange ein solches Gerät existiert oder ein Polarlicht-Widget angezeigt wird. Die Wahrscheinlichkeit ist die eines Polarlichts im Zenit, der höchste Wert der neun 1°-Felder um das Zuhause, und „Nacht“ heißt: die Sonne mehr als 6° unter dem Horizont. Unterhalb von etwa 55° Breite, wie im Großteil Deutschlands, ist Polarlicht selten: Nur starke Stürme (G3 oder mehr) bringen es dorthin.",
+        "es": "Cada vivienda de Gladys con ubicación recibe un dispositivo Auroras en la pantalla de descubrimiento: créelo para las viviendas que desee. La previsión (OVATION, un archivo de cerca de 1 MB) solo se lee mientras exista uno de esos dispositivos o se muestre un widget de aurora. La probabilidad es la de una aurora en el cenit, la más alta de las nueve celdas de 1° alrededor de la vivienda, y «noche» significa el sol a más de 6° bajo el horizonte. Por debajo de unos 55° de latitud, como en España, una aurora es rara: solo las tormentas fuertes (G3 o más) la traen."
+      },
+      "links": [
+        {
+          "url": "https://www.swpc.noaa.gov/products/aurora-30-minute-forecast",
+          "label": {
+            "en": "OVATION forecast",
+            "fr": "Prévision OVATION",
+            "de": "OVATION-Vorhersage",
+            "es": "Previsión OVATION"
+          }
+        }
+      ]
+    },
+    {
+      "key": "aurora_threshold",
+      "type": "select",
+      "default": "10",
+      "label": {
+        "en": "Aurora threshold",
+        "fr": "Seuil d’aurore",
+        "de": "Polarlicht-Schwelle",
+        "es": "Umbral de aurora"
+      },
+      "description": {
+        "en": "The probability from which an aurora is \"possible\" at a house, in a dark sky: the \"Aurora possible\" trigger and the colors of the widget.",
+        "fr": "La probabilité à partir de laquelle une aurore est « possible » dans une maison, par nuit noire : le déclencheur « Aurore possible » et les couleurs du widget.",
+        "de": "Die Wahrscheinlichkeit, ab der Polarlicht an einem Zuhause bei dunklem Himmel „möglich“ ist: der Auslöser „Polarlicht möglich“ und die Farben des Widgets.",
+        "es": "La probabilidad a partir de la cual una aurora es «posible» en una vivienda, con cielo oscuro: el disparador «Aurora posible» y los colores del widget."
+      },
+      "options": [
+        {
+          "value": "5",
+          "label": {
+            "en": "5 %",
+            "fr": "5 %",
+            "de": "5 %",
+            "es": "5 %"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "en": "10 %",
+            "fr": "10 %",
+            "de": "10 %",
+            "es": "10 %"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "en": "20 %",
+            "fr": "20 %",
+            "de": "20 %",
+            "es": "20 %"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "30 %",
+            "fr": "30 %",
+            "de": "30 %",
+            "es": "30 %"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "en": "50 %",
+            "fr": "50 %",
+            "de": "50 %",
+            "es": "50 %"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "description": {
+        "en": "Reads the NOAA scales and the estimated Kp, and lists the located houses.",
+        "fr": "Lit les échelles NOAA et le Kp estimé, et liste les maisons localisées.",
+        "de": "Liest die NOAA-Skalen und den geschätzten Kp und listet die Zuhause mit Standort auf.",
+        "es": "Lee las escalas NOAA y el Kp estimado, y enumera las viviendas con ubicación."
+      }
+    },
+    {
+      "key": "diagnostic",
+      "timeout_seconds": 10,
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes the state of the integration to its logs.",
+        "fr": "Écrit l’état de l’intégration dans ses journaux.",
+        "de": "Schreibt den Zustand der Integration in ihre Logs.",
+        "es": "Escribe el estado de la integración en sus registros."
+      }
+    }
+  ],
+  "widgets": [
+    {
+      "key": "overview",
+      "icon": "sun",
+      "label": {
+        "en": "Space weather",
+        "fr": "Météo spatiale",
+        "de": "Weltraumwetter",
+        "es": "Clima espacial"
+      },
+      "description": {
+        "en": "Kp now, NOAA scales, solar wind, Bz, X-rays, the Kp of 2 days and 3 days ahead.",
+        "fr": "Kp actuel, échelles NOAA, vent solaire, Bz, rayons X, le Kp sur 2 jours et 3 jours de prévision.",
+        "de": "Kp jetzt, NOAA-Skalen, Sonnenwind, Bz, Röntgen, der Kp von 2 Tagen und 3 Tage Vorhersage.",
+        "es": "Kp actual, escalas NOAA, viento solar, Bz, rayos X, el Kp de 2 días y 3 días de previsión."
+      }
+    },
+    {
+      "key": "aurora",
+      "icon": "moon",
+      "label": {
+        "en": "Aurora forecast",
+        "fr": "Prévision d’aurores",
+        "de": "Polarlicht-Vorhersage",
+        "es": "Previsión de auroras"
+      },
+      "description": {
+        "en": "A house: aurora probability, dark sky, Kp tonight, the last 24 hours.",
+        "fr": "Une maison : probabilité d’aurore, nuit noire, Kp cette nuit, les dernières 24 heures.",
+        "de": "Ein Zuhause: Polarlicht-Wahrscheinlichkeit, dunkler Himmel, Kp heute Nacht, letzte 24 Std.",
+        "es": "Una vivienda: probabilidad de aurora, cielo oscuro, Kp esta noche, las últimas 24 horas."
+      },
+      "settings": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Aurora device",
+            "fr": "Appareil Aurores",
+            "de": "Polarlicht-Gerät",
+            "es": "Dispositivo Auroras"
+          },
+          "description": {
+            "en": "An Aurora device. Leave empty for the first located house.",
+            "fr": "Un appareil Aurores. Laissez vide pour la première maison localisée.",
+            "de": "Ein Polarlicht-Gerät. Leer lassen für das erste Zuhause mit Standort.",
+            "es": "Un dispositivo Auroras. Déjelo vacío para la primera vivienda con ubicación."
+          }
+        }
+      ]
+    },
+    {
+      "key": "alerts",
+      "icon": "bell",
+      "label": {
+        "en": "SWPC alerts",
+        "fr": "Alertes du SWPC",
+        "de": "SWPC-Meldungen",
+        "es": "Alertas del SWPC"
+      },
+      "description": {
+        "en": "The last watches, warnings, alerts and summaries of the SWPC.",
+        "fr": "Les dernières veilles, avertissements, alertes et bilans du SWPC.",
+        "de": "Die letzten Vorwarnungen, Warnungen, Alarme und Zusammenfassungen des SWPC.",
+        "es": "Las últimas vigilancias, avisos, alertas y resúmenes del SWPC."
+      },
+      "settings": [
+        {
+          "key": "types",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Kinds",
+            "fr": "Types",
+            "de": "Arten",
+            "es": "Tipos"
+          },
+          "description": {
+            "en": "Leave empty for every kind.",
+            "fr": "Laissez vide pour tous les types.",
+            "de": "Leer lassen für alle Arten.",
+            "es": "Déjelo vacío para todos los tipos."
+          },
+          "options": [
+            {
+              "value": "watch",
+              "label": {
+                "en": "Watch",
+                "fr": "Veille",
+                "de": "Vorwarnung",
+                "es": "Vigilancia"
+              }
+            },
+            {
+              "value": "warning",
+              "label": {
+                "en": "Warning",
+                "fr": "Avertissement",
+                "de": "Warnung",
+                "es": "Aviso"
+              }
+            },
+            {
+              "value": "alert",
+              "label": {
+                "en": "Alert",
+                "fr": "Alerte",
+                "de": "Alarm",
+                "es": "Alerta"
+              }
+            },
+            {
+              "value": "summary",
+              "label": {
+                "en": "Summary",
+                "fr": "Bilan",
+                "de": "Zusammenfassung",
+                "es": "Resumen"
+              }
+            }
+          ]
+        },
+        {
+          "key": "days",
+          "type": "select",
+          "default": "7",
+          "label": {
+            "en": "Period",
+            "fr": "Période",
+            "de": "Zeitraum",
+            "es": "Periodo"
+          },
+          "options": [
+            {
+              "value": "1",
+              "label": {
+                "en": "1 day",
+                "fr": "1 jour",
+                "de": "1 Tag",
+                "es": "1 día"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "en": "3 days",
+                "fr": "3 jours",
+                "de": "3 Tage",
+                "es": "3 días"
+              }
+            },
+            {
+              "value": "7",
+              "label": {
+                "en": "7 days",
+                "fr": "7 jours",
+                "de": "7 Tage",
+                "es": "7 días"
+              }
+            },
+            {
+              "value": "30",
+              "label": {
+                "en": "30 days",
+                "fr": "30 jours",
+                "de": "30 Tage",
+                "es": "30 días"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "geomagnetic_storm",
+      "label": {
+        "en": "NOAA: geomagnetic storm",
+        "fr": "NOAA : orage géomagnétique",
+        "de": "NOAA: geomagnetischer Sturm",
+        "es": "NOAA: tormenta geomagnética"
+      },
+      "description": {
+        "en": "The NOAA G scale reaches a new level during an episode (G1 to G5).",
+        "fr": "L’échelle NOAA G atteint un nouveau niveau pendant un épisode (G1 à G5).",
+        "de": "Die NOAA-Skala G erreicht während einer Episode eine neue Stufe (G1 bis G5).",
+        "es": "La escala NOAA G alcanza un nuevo nivel durante un episodio (G1 a G5)."
+      },
+      "fields": [
+        {
+          "key": "level",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Levels",
+            "fr": "Niveaux",
+            "de": "Stufen",
+            "es": "Niveles"
+          },
+          "description": {
+            "en": "Leave empty for any level. For \"G3 or more\", pick G3, G4 and G5.",
+            "fr": "Laissez vide pour tout niveau. Pour « G3 ou plus », cochez G3, G4 et G5.",
+            "de": "Leer lassen für jede Stufe. Für „G3 oder mehr“ wähle G3, G4 und G5.",
+            "es": "Déjelo vacío para cualquier nivel. Para «G3 o más», elija G3, G4 y G5."
+          },
+          "options": [
+            {
+              "value": "G1",
+              "label": {
+                "en": "G1 (minor)",
+                "fr": "G1 (mineur)",
+                "de": "G1 (schwach)",
+                "es": "G1 (menor)"
+              }
+            },
+            {
+              "value": "G2",
+              "label": {
+                "en": "G2 (moderate)",
+                "fr": "G2 (modéré)",
+                "de": "G2 (mäßig)",
+                "es": "G2 (moderada)"
+              }
+            },
+            {
+              "value": "G3",
+              "label": {
+                "en": "G3 (strong)",
+                "fr": "G3 (fort)",
+                "de": "G3 (stark)",
+                "es": "G3 (fuerte)"
+              }
+            },
+            {
+              "value": "G4",
+              "label": {
+                "en": "G4 (severe)",
+                "fr": "G4 (sévère)",
+                "de": "G4 (schwer)",
+                "es": "G4 (severa)"
+              }
+            },
+            {
+              "value": "G5",
+              "label": {
+                "en": "G5 (extreme)",
+                "fr": "G5 (extrême)",
+                "de": "G5 (extrem)",
+                "es": "G5 (extrema)"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "level",
+          "type": "string",
+          "label": {
+            "en": "Level (G3, S1…)",
+            "fr": "Niveau (G3, S1…)",
+            "de": "Stufe (G3, S1…)",
+            "es": "Nivel (G3, S1…)"
+          }
+        },
+        {
+          "key": "level_number",
+          "type": "number",
+          "label": {
+            "en": "Level (number)",
+            "fr": "Niveau (nombre)",
+            "de": "Stufe (Zahl)",
+            "es": "Nivel (número)"
+          }
+        },
+        {
+          "key": "previous_level",
+          "type": "string",
+          "label": {
+            "en": "Previous level",
+            "fr": "Niveau précédent",
+            "de": "Vorherige Stufe",
+            "es": "Nivel anterior"
+          }
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "label": {
+            "en": "NOAA description",
+            "fr": "Description NOAA",
+            "de": "NOAA-Beschreibung",
+            "es": "Descripción NOAA"
+          }
+        },
+        {
+          "key": "kp",
+          "type": "number",
+          "label": {
+            "en": "Kp now",
+            "fr": "Kp actuel",
+            "de": "Kp aktuell",
+            "es": "Kp actual"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "geomagnetic_storm_ended",
+      "label": {
+        "en": "NOAA: geomagnetic storm over",
+        "fr": "NOAA : fin d’orage géomagnétique",
+        "de": "NOAA: geomagnetischer Sturm vorbei",
+        "es": "NOAA: fin de tormenta geomagnética"
+      },
+      "description": {
+        "en": "The G scale has been back at G0 for 3 hours after a storm.",
+        "fr": "L’échelle G est revenue à G0 depuis 3 heures après un orage.",
+        "de": "Die Skala G ist nach einem Sturm seit 3 Stunden wieder bei G0.",
+        "es": "La escala G lleva 3 horas de nuevo en G0 tras una tormenta."
+      },
+      "variables": [
+        {
+          "key": "max_level",
+          "type": "string",
+          "label": {
+            "en": "Highest level",
+            "fr": "Niveau maximal",
+            "de": "Höchste Stufe",
+            "es": "Nivel máximo"
+          }
+        },
+        {
+          "key": "max_level_number",
+          "type": "number",
+          "label": {
+            "en": "Highest level (number)",
+            "fr": "Niveau maximal (nombre)",
+            "de": "Höchste Stufe (Zahl)",
+            "es": "Nivel máximo (número)"
+          }
+        },
+        {
+          "key": "duration_hours",
+          "type": "number",
+          "label": {
+            "en": "Duration (hours)",
+            "fr": "Durée (heures)",
+            "de": "Dauer (Stunden)",
+            "es": "Duración (horas)"
+          }
+        },
+        {
+          "key": "kp",
+          "type": "number",
+          "label": {
+            "en": "Kp now",
+            "fr": "Kp actuel",
+            "de": "Kp aktuell",
+            "es": "Kp actual"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "radiation_storm",
+      "label": {
+        "en": "NOAA: solar radiation storm",
+        "fr": "NOAA : tempête de radiations",
+        "de": "NOAA: Strahlungssturm",
+        "es": "NOAA: tormenta de radiación"
+      },
+      "description": {
+        "en": "The NOAA S scale reaches a new level (S1 to S5): protons from the Sun.",
+        "fr": "L’échelle NOAA S atteint un nouveau niveau (S1 à S5) : protons venus du Soleil.",
+        "de": "Die NOAA-Skala S erreicht eine neue Stufe (S1 bis S5): Protonen der Sonne.",
+        "es": "La escala NOAA S alcanza un nuevo nivel (S1 a S5): protones del Sol."
+      },
+      "fields": [
+        {
+          "key": "level",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Levels",
+            "fr": "Niveaux",
+            "de": "Stufen",
+            "es": "Niveles"
+          },
+          "description": {
+            "en": "Leave empty for any level. For \"S3 or more\", pick S3, S4 and S5.",
+            "fr": "Laissez vide pour tout niveau. Pour « S3 ou plus », cochez S3, S4 et S5.",
+            "de": "Leer lassen für jede Stufe. Für „S3 oder mehr“ wähle S3, S4 und S5.",
+            "es": "Déjelo vacío para cualquier nivel. Para «S3 o más», elija S3, S4 y S5."
+          },
+          "options": [
+            {
+              "value": "S1",
+              "label": {
+                "en": "S1 (minor)",
+                "fr": "S1 (mineure)",
+                "de": "S1 (schwach)",
+                "es": "S1 (menor)"
+              }
+            },
+            {
+              "value": "S2",
+              "label": {
+                "en": "S2 (moderate)",
+                "fr": "S2 (modérée)",
+                "de": "S2 (mäßig)",
+                "es": "S2 (moderada)"
+              }
+            },
+            {
+              "value": "S3",
+              "label": {
+                "en": "S3 (strong)",
+                "fr": "S3 (forte)",
+                "de": "S3 (stark)",
+                "es": "S3 (fuerte)"
+              }
+            },
+            {
+              "value": "S4",
+              "label": {
+                "en": "S4 (severe)",
+                "fr": "S4 (sévère)",
+                "de": "S4 (schwer)",
+                "es": "S4 (severa)"
+              }
+            },
+            {
+              "value": "S5",
+              "label": {
+                "en": "S5 (extreme)",
+                "fr": "S5 (extrême)",
+                "de": "S5 (extrem)",
+                "es": "S5 (extrema)"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "level",
+          "type": "string",
+          "label": {
+            "en": "Level (G3, S1…)",
+            "fr": "Niveau (G3, S1…)",
+            "de": "Stufe (G3, S1…)",
+            "es": "Nivel (G3, S1…)"
+          }
+        },
+        {
+          "key": "level_number",
+          "type": "number",
+          "label": {
+            "en": "Level (number)",
+            "fr": "Niveau (nombre)",
+            "de": "Stufe (Zahl)",
+            "es": "Nivel (número)"
+          }
+        },
+        {
+          "key": "previous_level",
+          "type": "string",
+          "label": {
+            "en": "Previous level",
+            "fr": "Niveau précédent",
+            "de": "Vorherige Stufe",
+            "es": "Nivel anterior"
+          }
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "label": {
+            "en": "NOAA description",
+            "fr": "Description NOAA",
+            "de": "NOAA-Beschreibung",
+            "es": "Descripción NOAA"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "radio_blackout",
+      "label": {
+        "en": "NOAA: radio blackout",
+        "fr": "NOAA : black-out radio",
+        "de": "NOAA: Funkausfall",
+        "es": "NOAA: apagón de radio"
+      },
+      "description": {
+        "en": "The NOAA R scale reaches a new level (R1 to R5): HF radio disturbed on the day side.",
+        "fr": "L’échelle NOAA R atteint un nouveau niveau (R1 à R5) : radio HF perturbée côté jour.",
+        "de": "Die NOAA-Skala R erreicht eine neue Stufe (R1 bis R5): KW-Funk auf der Tagseite gestört.",
+        "es": "La escala NOAA R alcanza un nuevo nivel (R1 a R5): radio HF perturbada en el lado diurno."
+      },
+      "fields": [
+        {
+          "key": "level",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Levels",
+            "fr": "Niveaux",
+            "de": "Stufen",
+            "es": "Niveles"
+          },
+          "description": {
+            "en": "Leave empty for any level. For \"R3 or more\", pick R3, R4 and R5.",
+            "fr": "Laissez vide pour tout niveau. Pour « R3 ou plus », cochez R3, R4 et R5.",
+            "de": "Leer lassen für jede Stufe. Für „R3 oder mehr“ wähle R3, R4 und R5.",
+            "es": "Déjelo vacío para cualquier nivel. Para «R3 o más», elija R3, R4 y R5."
+          },
+          "options": [
+            {
+              "value": "R1",
+              "label": {
+                "en": "R1 (minor)",
+                "fr": "R1 (mineur)",
+                "de": "R1 (schwach)",
+                "es": "R1 (menor)"
+              }
+            },
+            {
+              "value": "R2",
+              "label": {
+                "en": "R2 (moderate)",
+                "fr": "R2 (modéré)",
+                "de": "R2 (mäßig)",
+                "es": "R2 (moderado)"
+              }
+            },
+            {
+              "value": "R3",
+              "label": {
+                "en": "R3 (strong)",
+                "fr": "R3 (fort)",
+                "de": "R3 (stark)",
+                "es": "R3 (fuerte)"
+              }
+            },
+            {
+              "value": "R4",
+              "label": {
+                "en": "R4 (severe)",
+                "fr": "R4 (sévère)",
+                "de": "R4 (schwer)",
+                "es": "R4 (severo)"
+              }
+            },
+            {
+              "value": "R5",
+              "label": {
+                "en": "R5 (extreme)",
+                "fr": "R5 (extrême)",
+                "de": "R5 (extrem)",
+                "es": "R5 (extremo)"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "level",
+          "type": "string",
+          "label": {
+            "en": "Level (G3, S1…)",
+            "fr": "Niveau (G3, S1…)",
+            "de": "Stufe (G3, S1…)",
+            "es": "Nivel (G3, S1…)"
+          }
+        },
+        {
+          "key": "level_number",
+          "type": "number",
+          "label": {
+            "en": "Level (number)",
+            "fr": "Niveau (nombre)",
+            "de": "Stufe (Zahl)",
+            "es": "Nivel (número)"
+          }
+        },
+        {
+          "key": "previous_level",
+          "type": "string",
+          "label": {
+            "en": "Previous level",
+            "fr": "Niveau précédent",
+            "de": "Vorherige Stufe",
+            "es": "Nivel anterior"
+          }
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "label": {
+            "en": "NOAA description",
+            "fr": "Description NOAA",
+            "de": "NOAA-Beschreibung",
+            "es": "Descripción NOAA"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "solar_flare",
+      "label": {
+        "en": "NOAA: solar flare",
+        "fr": "NOAA : éruption solaire",
+        "de": "NOAA: Sonneneruption",
+        "es": "NOAA: fulguración solar"
+      },
+      "description": {
+        "en": "A flare reaches class M or X (GOES X-rays). A flare that grows from M to X fires again.",
+        "fr": "Une éruption atteint la classe M ou X (rayons X GOES). Une éruption qui passe de M à X redéclenche.",
+        "de": "Ein Flare erreicht die Klasse M oder X (GOES-Röntgen). Ein Flare, der von M auf X wächst, löst erneut aus.",
+        "es": "Una fulguración alcanza la clase M o X (rayos X GOES). Si pasa de M a X, se dispara de nuevo."
+      },
+      "fields": [
+        {
+          "key": "class_letter",
+          "type": "select",
+          "required": false,
+          "label": {
+            "en": "Class",
+            "fr": "Classe",
+            "de": "Klasse",
+            "es": "Clase"
+          },
+          "description": {
+            "en": "Leave empty for M and X. X: the strong flares only.",
+            "fr": "Laissez vide pour M et X. X : les fortes éruptions seulement.",
+            "de": "Leer lassen für M und X. X: nur die starken Flares.",
+            "es": "Déjelo vacío para M y X. X: solo las fulguraciones fuertes."
+          },
+          "options": [
+            {
+              "value": "M",
+              "label": {
+                "en": "M (medium)",
+                "fr": "M (moyenne)",
+                "de": "M (mittel)",
+                "es": "M (media)"
+              }
+            },
+            {
+              "value": "X",
+              "label": {
+                "en": "X (strong)",
+                "fr": "X (forte)",
+                "de": "X (stark)",
+                "es": "X (fuerte)"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "class",
+          "type": "string",
+          "label": {
+            "en": "Class (M2.5…)",
+            "fr": "Classe (M2.5…)",
+            "de": "Klasse (M2.5…)",
+            "es": "Clase (M2.5…)"
+          }
+        },
+        {
+          "key": "class_letter",
+          "type": "string",
+          "label": {
+            "en": "Class letter",
+            "fr": "Lettre de classe",
+            "de": "Klassenbuchstabe",
+            "es": "Letra de clase"
+          }
+        },
+        {
+          "key": "begin_time",
+          "type": "string",
+          "label": {
+            "en": "Begin",
+            "fr": "Début",
+            "de": "Beginn",
+            "es": "Inicio"
+          }
+        },
+        {
+          "key": "peak_time",
+          "type": "string",
+          "label": {
+            "en": "Peak",
+            "fr": "Pic",
+            "de": "Höhepunkt",
+            "es": "Pico"
+          }
+        },
+        {
+          "key": "end_time",
+          "type": "string",
+          "label": {
+            "en": "End",
+            "fr": "Fin",
+            "de": "Ende",
+            "es": "Fin"
+          }
+        },
+        {
+          "key": "peak_flux",
+          "type": "number",
+          "label": {
+            "en": "Peak flux (W/m²)",
+            "fr": "Flux au pic (W/m²)",
+            "de": "Spitzenfluss (W/m²)",
+            "es": "Flujo máximo (W/m²)"
+          }
+        },
+        {
+          "key": "radio_blackout",
+          "type": "string",
+          "label": {
+            "en": "Radio blackout (R)",
+            "fr": "Black-out radio (R)",
+            "de": "Funkausfall (R)",
+            "es": "Apagón de radio (R)"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "aurora_possible",
+      "label": {
+        "en": "NOAA: aurora possible",
+        "fr": "NOAA : aurore possible",
+        "de": "NOAA: Polarlicht möglich",
+        "es": "NOAA: aurora posible"
+      },
+      "description": {
+        "en": "At a house with an Aurora device: the probability reaches the threshold of the configuration in a dark sky.",
+        "fr": "Dans une maison avec un appareil Aurores : la probabilité atteint le seuil de la configuration, par nuit noire.",
+        "de": "An einem Zuhause mit Polarlicht-Gerät: Die Wahrscheinlichkeit erreicht bei dunklem Himmel die Schwelle der Konfiguration.",
+        "es": "En una vivienda con dispositivo Auroras: la probabilidad alcanza el umbral de la configuración con cielo oscuro."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Aurora device",
+            "fr": "Appareil Aurores",
+            "de": "Polarlicht-Gerät",
+            "es": "Dispositivo Auroras"
+          },
+          "description": {
+            "en": "An Aurora device of this integration. Leave empty for any house.",
+            "fr": "Un appareil Aurores de cette intégration. Laissez vide pour toutes les maisons.",
+            "de": "Ein Polarlicht-Gerät dieser Integration. Leer lassen für jedes Zuhause.",
+            "es": "Un dispositivo Auroras de esta integración. Déjelo vacío para cualquier vivienda."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "house",
+          "type": "string",
+          "label": {
+            "en": "House (selector)",
+            "fr": "Maison (sélecteur)",
+            "de": "Zuhause (Selektor)",
+            "es": "Vivienda (selector)"
+          }
+        },
+        {
+          "key": "house_name",
+          "type": "string",
+          "label": {
+            "en": "House",
+            "fr": "Maison",
+            "de": "Zuhause",
+            "es": "Vivienda"
+          }
+        },
+        {
+          "key": "probability",
+          "type": "number",
+          "label": {
+            "en": "Probability (%)",
+            "fr": "Probabilité (%)",
+            "de": "Wahrscheinlichkeit (%)",
+            "es": "Probabilidad (%)"
+          }
+        },
+        {
+          "key": "threshold",
+          "type": "number",
+          "label": {
+            "en": "Threshold (%)",
+            "fr": "Seuil (%)",
+            "de": "Schwelle (%)",
+            "es": "Umbral (%)"
+          }
+        },
+        {
+          "key": "kp",
+          "type": "number",
+          "label": {
+            "en": "Kp now",
+            "fr": "Kp actuel",
+            "de": "Kp aktuell",
+            "es": "Kp actual"
+          }
+        },
+        {
+          "key": "kp_tonight",
+          "type": "number",
+          "label": {
+            "en": "Kp expected tonight",
+            "fr": "Kp prévu cette nuit",
+            "de": "Kp heute Nacht",
+            "es": "Kp previsto esta noche"
+          }
+        },
+        {
+          "key": "observation_time",
+          "type": "string",
+          "label": {
+            "en": "OVATION observation",
+            "fr": "Observation OVATION",
+            "de": "OVATION-Beobachtung",
+            "es": "Observación OVATION"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "aurora_ended",
+      "label": {
+        "en": "NOAA: aurora over",
+        "fr": "NOAA : fin d’aurore possible",
+        "de": "NOAA: Polarlicht vorbei",
+        "es": "NOAA: fin de aurora posible"
+      },
+      "description": {
+        "en": "After \"aurora possible\": the dawn, or the probability back under the threshold.",
+        "fr": "Après « aurore possible » : l’aube, ou la probabilité repassée sous le seuil.",
+        "de": "Nach „Polarlicht möglich“: die Dämmerung oder die Wahrscheinlichkeit wieder unter der Schwelle.",
+        "es": "Tras «aurora posible»: el amanecer, o la probabilidad de nuevo bajo el umbral."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Aurora device",
+            "fr": "Appareil Aurores",
+            "de": "Polarlicht-Gerät",
+            "es": "Dispositivo Auroras"
+          },
+          "description": {
+            "en": "An Aurora device of this integration. Leave empty for any house.",
+            "fr": "Un appareil Aurores de cette intégration. Laissez vide pour toutes les maisons.",
+            "de": "Ein Polarlicht-Gerät dieser Integration. Leer lassen für jedes Zuhause.",
+            "es": "Un dispositivo Auroras de esta integración. Déjelo vacío para cualquier vivienda."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "house",
+          "type": "string",
+          "label": {
+            "en": "House (selector)",
+            "fr": "Maison (sélecteur)",
+            "de": "Zuhause (Selektor)",
+            "es": "Vivienda (selector)"
+          }
+        },
+        {
+          "key": "house_name",
+          "type": "string",
+          "label": {
+            "en": "House",
+            "fr": "Maison",
+            "de": "Zuhause",
+            "es": "Vivienda"
+          }
+        },
+        {
+          "key": "reason",
+          "type": "string",
+          "label": {
+            "en": "Reason (dawn, decreased)",
+            "fr": "Raison (dawn, decreased)",
+            "de": "Grund (dawn, decreased)",
+            "es": "Motivo (dawn, decreased)"
+          }
+        },
+        {
+          "key": "max_probability",
+          "type": "number",
+          "label": {
+            "en": "Highest probability (%)",
+            "fr": "Probabilité maximale (%)",
+            "de": "Höchste Wahrscheinlichkeit (%)",
+            "es": "Probabilidad máxima (%)"
+          }
+        },
+        {
+          "key": "probability",
+          "type": "number",
+          "label": {
+            "en": "Probability (%)",
+            "fr": "Probabilité (%)",
+            "de": "Wahrscheinlichkeit (%)",
+            "es": "Probabilidad (%)"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "swpc_alert",
+      "label": {
+        "en": "NOAA: SWPC message",
+        "fr": "NOAA : message du SWPC",
+        "de": "NOAA: SWPC-Meldung",
+        "es": "NOAA: mensaje del SWPC"
+      },
+      "description": {
+        "en": "A new watch, warning, alert or summary of the SWPC (text in English, short title translated).",
+        "fr": "Une nouvelle veille, un avertissement, une alerte ou un bilan du SWPC (texte en anglais, titre court traduit).",
+        "de": "Eine neue Vorwarnung, Warnung, ein Alarm oder eine Zusammenfassung des SWPC (Text auf Englisch, Kurztitel übersetzt).",
+        "es": "Una nueva vigilancia, aviso, alerta o resumen del SWPC (texto en inglés, título corto traducido)."
+      },
+      "fields": [
+        {
+          "key": "type",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Kinds",
+            "fr": "Types",
+            "de": "Arten",
+            "es": "Tipos"
+          },
+          "description": {
+            "en": "Leave empty for every kind.",
+            "fr": "Laissez vide pour tous les types.",
+            "de": "Leer lassen für alle Arten.",
+            "es": "Déjelo vacío para todos los tipos."
+          },
+          "options": [
+            {
+              "value": "watch",
+              "label": {
+                "en": "Watch",
+                "fr": "Veille",
+                "de": "Vorwarnung",
+                "es": "Vigilancia"
+              }
+            },
+            {
+              "value": "warning",
+              "label": {
+                "en": "Warning",
+                "fr": "Avertissement",
+                "de": "Warnung",
+                "es": "Aviso"
+              }
+            },
+            {
+              "value": "alert",
+              "label": {
+                "en": "Alert",
+                "fr": "Alerte",
+                "de": "Alarm",
+                "es": "Alerta"
+              }
+            },
+            {
+              "value": "summary",
+              "label": {
+                "en": "Summary",
+                "fr": "Bilan",
+                "de": "Zusammenfassung",
+                "es": "Resumen"
+              }
+            }
+          ]
+        },
+        {
+          "key": "topic",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Topics",
+            "fr": "Sujets",
+            "de": "Themen",
+            "es": "Temas"
+          },
+          "description": {
+            "en": "Leave empty for every topic.",
+            "fr": "Laissez vide pour tous les sujets.",
+            "de": "Leer lassen für alle Themen.",
+            "es": "Déjelo vacío para todos los temas."
+          },
+          "options": [
+            {
+              "value": "geomagnetic",
+              "label": {
+                "en": "Geomagnetic (K-index, storms)",
+                "fr": "Géomagnétisme (indice K, orages)",
+                "de": "Geomagnetisch (K-Index, Stürme)",
+                "es": "Geomagnetismo (índice K, tormentas)"
+              }
+            },
+            {
+              "value": "radiation",
+              "label": {
+                "en": "Radiation (protons, electrons)",
+                "fr": "Radiations (protons, électrons)",
+                "de": "Strahlung (Protonen, Elektronen)",
+                "es": "Radiación (protones, electrones)"
+              }
+            },
+            {
+              "value": "radio",
+              "label": {
+                "en": "Radio (X-rays, radio bursts)",
+                "fr": "Radio (rayons X, sursauts)",
+                "de": "Funk (Röntgen, Radioausbrüche)",
+                "es": "Radio (rayos X, ráfagas)"
+              }
+            },
+            {
+              "value": "other",
+              "label": {
+                "en": "Other",
+                "fr": "Autre",
+                "de": "Andere",
+                "es": "Otro"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "type",
+          "type": "string",
+          "label": {
+            "en": "Kind",
+            "fr": "Type",
+            "de": "Art",
+            "es": "Tipo"
+          }
+        },
+        {
+          "key": "topic",
+          "type": "string",
+          "label": {
+            "en": "Topic",
+            "fr": "Sujet",
+            "de": "Thema",
+            "es": "Tema"
+          }
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "label": {
+            "en": "Status (new, extended…)",
+            "fr": "Statut (new, extended…)",
+            "de": "Status (new, extended…)",
+            "es": "Estado (new, extended…)"
+          }
+        },
+        {
+          "key": "code",
+          "type": "string",
+          "label": {
+            "en": "Message code",
+            "fr": "Code du message",
+            "de": "Meldungscode",
+            "es": "Código del mensaje"
+          }
+        },
+        {
+          "key": "serial",
+          "type": "number",
+          "label": {
+            "en": "Serial number",
+            "fr": "Numéro de série",
+            "de": "Seriennummer",
+            "es": "Número de serie"
+          }
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "label": {
+            "en": "Short title",
+            "fr": "Titre court",
+            "de": "Kurztitel",
+            "es": "Título corto"
+          }
+        },
+        {
+          "key": "headline",
+          "type": "string",
+          "label": {
+            "en": "Headline (English)",
+            "fr": "Titre original (anglais)",
+            "de": "Originaltitel (Englisch)",
+            "es": "Titular original (inglés)"
+          }
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "label": {
+            "en": "Text (English)",
+            "fr": "Texte (anglais)",
+            "de": "Text (Englisch)",
+            "es": "Texto (inglés)"
+          }
+        },
+        {
+          "key": "issue_time",
+          "type": "string",
+          "label": {
+            "en": "Issue time",
+            "fr": "Heure d’émission",
+            "de": "Ausgabezeit",
+            "es": "Hora de emisión"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "storm_forecast",
+      "label": {
+        "en": "NOAA: storm in the forecast",
+        "fr": "NOAA : orage prévu",
+        "de": "NOAA: Sturm vorhergesagt",
+        "es": "NOAA: tormenta prevista"
+      },
+      "description": {
+        "en": "The Kp forecast expects a geomagnetic storm (Kp 5 or more) within 3 days; once per episode.",
+        "fr": "La prévision du Kp annonce un orage géomagnétique (Kp 5 ou plus) sous 3 jours ; une fois par épisode.",
+        "de": "Die Kp-Vorhersage erwartet in 3 Tagen einen geomagnetischen Sturm (Kp 5 oder mehr); einmal pro Episode.",
+        "es": "La previsión del Kp anuncia una tormenta geomagnética (Kp 5 o más) en 3 días; una vez por episodio."
+      },
+      "variables": [
+        {
+          "key": "level",
+          "type": "string",
+          "label": {
+            "en": "Level (G3, S1…)",
+            "fr": "Niveau (G3, S1…)",
+            "de": "Stufe (G3, S1…)",
+            "es": "Nivel (G3, S1…)"
+          }
+        },
+        {
+          "key": "level_number",
+          "type": "number",
+          "label": {
+            "en": "Level (number)",
+            "fr": "Niveau (nombre)",
+            "de": "Stufe (Zahl)",
+            "es": "Nivel (número)"
+          }
+        },
+        {
+          "key": "max_kp",
+          "type": "number",
+          "label": {
+            "en": "Highest Kp expected",
+            "fr": "Kp maximal prévu",
+            "de": "Höchster erwarteter Kp",
+            "es": "Kp máximo previsto"
+          }
+        },
+        {
+          "key": "start_time",
+          "type": "string",
+          "label": {
+            "en": "Start",
+            "fr": "Début",
+            "de": "Beginn",
+            "es": "Inicio"
+          }
+        },
+        {
+          "key": "end_time",
+          "type": "string",
+          "label": {
+            "en": "End",
+            "fr": "Fin",
+            "de": "Ende",
+            "es": "Fin"
+          }
+        },
+        {
+          "key": "hours_until",
+          "type": "number",
+          "label": {
+            "en": "Hours until it starts",
+            "fr": "Heures avant le début",
+            "de": "Stunden bis zum Beginn",
+            "es": "Horas hasta el inicio"
+          }
+        },
+        {
+          "key": "sentence",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "get_space_weather",
+      "timeout_seconds": 30,
+      "label": {
+        "en": "NOAA: read the space weather",
+        "fr": "NOAA : lire la météo spatiale",
+        "de": "NOAA: Weltraumwetter lesen",
+        "es": "NOAA: leer el clima espacial"
+      },
+      "description": {
+        "en": "Kp, NOAA scales, solar wind, magnetic field, X-rays, last flare, and a sentence.",
+        "fr": "Kp, échelles NOAA, vent solaire, champ magnétique, rayons X, dernière éruption, et une phrase.",
+        "de": "Kp, NOAA-Skalen, Sonnenwind, Magnetfeld, Röntgen, letzter Flare und ein Satz.",
+        "es": "Kp, escalas NOAA, viento solar, campo magnético, rayos X, última fulguración y una frase."
+      },
+      "fields": [],
+      "outputs": [
+        {
+          "key": "kp",
+          "type": "number",
+          "label": {
+            "en": "Kp now",
+            "fr": "Kp actuel",
+            "de": "Kp aktuell",
+            "es": "Kp actual"
+          }
+        },
+        {
+          "key": "kp_official",
+          "type": "number",
+          "label": {
+            "en": "Kp of the last 3 hours",
+            "fr": "Kp des 3 dernières heures",
+            "de": "Kp der letzten 3 Stunden",
+            "es": "Kp de las últimas 3 horas"
+          }
+        },
+        {
+          "key": "g_scale",
+          "type": "number",
+          "label": {
+            "en": "G scale",
+            "fr": "Échelle G",
+            "de": "Skala G",
+            "es": "Escala G"
+          }
+        },
+        {
+          "key": "s_scale",
+          "type": "number",
+          "label": {
+            "en": "S scale",
+            "fr": "Échelle S",
+            "de": "Skala S",
+            "es": "Escala S"
+          }
+        },
+        {
+          "key": "r_scale",
+          "type": "number",
+          "label": {
+            "en": "R scale",
+            "fr": "Échelle R",
+            "de": "Skala R",
+            "es": "Escala R"
+          }
+        },
+        {
+          "key": "solar_wind_speed",
+          "type": "number",
+          "label": {
+            "en": "Solar wind (km/s)",
+            "fr": "Vent solaire (km/s)",
+            "de": "Sonnenwind (km/s)",
+            "es": "Viento solar (km/s)"
+          }
+        },
+        {
+          "key": "bz",
+          "type": "number",
+          "label": {
+            "en": "Bz (nT)",
+            "fr": "Bz (nT)",
+            "de": "Bz (nT)",
+            "es": "Bz (nT)"
+          }
+        },
+        {
+          "key": "bt",
+          "type": "number",
+          "label": {
+            "en": "Bt (nT)",
+            "fr": "Bt (nT)",
+            "de": "Bt (nT)",
+            "es": "Bt (nT)"
+          }
+        },
+        {
+          "key": "radio_flux",
+          "type": "number",
+          "label": {
+            "en": "Radio flux 10.7 cm (sfu)",
+            "fr": "Flux radio 10,7 cm (sfu)",
+            "de": "Radiofluss 10,7 cm (sfu)",
+            "es": "Flujo de radio 10,7 cm (sfu)"
+          }
+        },
+        {
+          "key": "xray_class",
+          "type": "string",
+          "label": {
+            "en": "X-ray class now",
+            "fr": "Classe X actuelle",
+            "de": "Röntgenklasse jetzt",
+            "es": "Clase de rayos X actual"
+          }
+        },
+        {
+          "key": "last_flare_class",
+          "type": "string",
+          "label": {
+            "en": "Class of the last flare",
+            "fr": "Classe de la dernière éruption",
+            "de": "Klasse des letzten Flares",
+            "es": "Clase de la última fulguración"
+          }
+        },
+        {
+          "key": "last_flare_time",
+          "type": "string",
+          "label": {
+            "en": "Time of the last flare",
+            "fr": "Heure de la dernière éruption",
+            "de": "Zeit des letzten Flares",
+            "es": "Hora de la última fulguración"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary sentence",
+            "fr": "Phrase de résumé",
+            "de": "Zusammenfassung",
+            "es": "Frase de resumen"
+          }
+        }
+      ]
+    },
+    {
+      "key": "get_aurora",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "NOAA: read the aurora forecast",
+        "fr": "NOAA : lire la prévision d’aurore",
+        "de": "NOAA: Polarlicht-Vorhersage lesen",
+        "es": "NOAA: leer la previsión de aurora"
+      },
+      "description": {
+        "en": "At a house: aurora probability, dark hours, Kp expected tonight, and a sentence.",
+        "fr": "Dans une maison : probabilité d’aurore, heures de nuit noire, Kp prévu cette nuit, et une phrase.",
+        "de": "An einem Zuhause: Polarlicht-Wahrscheinlichkeit, dunkle Stunden, Kp heute Nacht und ein Satz.",
+        "es": "En una vivienda: probabilidad de aurora, horas de cielo oscuro, Kp previsto esta noche y una frase."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Aurora device",
+            "fr": "Appareil Aurores",
+            "de": "Polarlicht-Gerät",
+            "es": "Dispositivo Auroras"
+          },
+          "description": {
+            "en": "An Aurora device. Leave empty for the first located house.",
+            "fr": "Un appareil Aurores. Laissez vide pour la première maison localisée.",
+            "de": "Ein Polarlicht-Gerät. Leer lassen für das erste Zuhause mit Standort.",
+            "es": "Un dispositivo Auroras. Déjelo vacío para la primera vivienda con ubicación."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "house_name",
+          "type": "string",
+          "label": {
+            "en": "House",
+            "fr": "Maison",
+            "de": "Zuhause",
+            "es": "Vivienda"
+          }
+        },
+        {
+          "key": "probability",
+          "type": "number",
+          "label": {
+            "en": "Probability (%)",
+            "fr": "Probabilité (%)",
+            "de": "Wahrscheinlichkeit (%)",
+            "es": "Probabilidad (%)"
+          }
+        },
+        {
+          "key": "possible",
+          "type": "boolean",
+          "label": {
+            "en": "Aurora possible now",
+            "fr": "Aurore possible maintenant",
+            "de": "Polarlicht jetzt möglich",
+            "es": "Aurora posible ahora"
+          }
+        },
+        {
+          "key": "dark",
+          "type": "boolean",
+          "label": {
+            "en": "Dark sky now",
+            "fr": "Nuit noire maintenant",
+            "de": "Jetzt dunkel",
+            "es": "Cielo oscuro ahora"
+          }
+        },
+        {
+          "key": "dark_start",
+          "type": "string",
+          "label": {
+            "en": "Dark sky from",
+            "fr": "Nuit noire dès",
+            "de": "Dunkel ab",
+            "es": "Cielo oscuro desde"
+          }
+        },
+        {
+          "key": "dark_end",
+          "type": "string",
+          "label": {
+            "en": "Dark sky until",
+            "fr": "Nuit noire jusqu’à",
+            "de": "Dunkel bis",
+            "es": "Cielo oscuro hasta"
+          }
+        },
+        {
+          "key": "kp_tonight",
+          "type": "number",
+          "label": {
+            "en": "Kp expected tonight",
+            "fr": "Kp prévu cette nuit",
+            "de": "Kp heute Nacht",
+            "es": "Kp previsto esta noche"
+          }
+        },
+        {
+          "key": "threshold",
+          "type": "number",
+          "label": {
+            "en": "Threshold (%)",
+            "fr": "Seuil (%)",
+            "de": "Schwelle (%)",
+            "es": "Umbral (%)"
+          }
+        },
+        {
+          "key": "observation_time",
+          "type": "string",
+          "label": {
+            "en": "OVATION observation",
+            "fr": "Observation OVATION",
+            "de": "OVATION-Beobachtung",
+            "es": "Observación OVATION"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary sentence",
+            "fr": "Phrase de résumé",
+            "de": "Zusammenfassung",
+            "es": "Frase de resumen"
+          }
+        }
+      ]
+    },
+    {
+      "key": "get_forecast",
+      "timeout_seconds": 30,
+      "label": {
+        "en": "NOAA: read the 3-day forecast",
+        "fr": "NOAA : lire la prévision à 3 jours",
+        "de": "NOAA: 3-Tage-Vorhersage lesen",
+        "es": "NOAA: leer la previsión a 3 días"
+      },
+      "description": {
+        "en": "Highest Kp per day, expected G level, chances of radio blackout and radiation storm, and a sentence.",
+        "fr": "Kp maximal par jour, niveau G prévu, probabilités de black-out radio et de tempête de radiations, et une phrase.",
+        "de": "Höchster Kp pro Tag, erwartete G-Stufe, Wahrscheinlichkeiten für Funkausfall und Strahlungssturm und ein Satz.",
+        "es": "Kp máximo por día, nivel G previsto, probabilidades de apagón de radio y tormenta de radiación, y una frase."
+      },
+      "fields": [],
+      "outputs": [
+        {
+          "key": "kp_max_today",
+          "type": "number",
+          "label": {
+            "en": "Highest Kp today (UTC)",
+            "fr": "Kp maximal aujourd’hui (UTC)",
+            "de": "Höchster Kp heute (UTC)",
+            "es": "Kp máximo hoy (UTC)"
+          }
+        },
+        {
+          "key": "kp_max_tomorrow",
+          "type": "number",
+          "label": {
+            "en": "Highest Kp tomorrow",
+            "fr": "Kp maximal demain",
+            "de": "Höchster Kp morgen",
+            "es": "Kp máximo mañana"
+          }
+        },
+        {
+          "key": "kp_max_day_after",
+          "type": "number",
+          "label": {
+            "en": "Highest Kp the day after",
+            "fr": "Kp maximal après-demain",
+            "de": "Höchster Kp übermorgen",
+            "es": "Kp máximo pasado mañana"
+          }
+        },
+        {
+          "key": "g_max",
+          "type": "string",
+          "label": {
+            "en": "Highest G level expected",
+            "fr": "Niveau G maximal prévu",
+            "de": "Höchste erwartete G-Stufe",
+            "es": "Nivel G máximo previsto"
+          }
+        },
+        {
+          "key": "storm_expected",
+          "type": "boolean",
+          "label": {
+            "en": "Storm expected",
+            "fr": "Orage prévu",
+            "de": "Sturm erwartet",
+            "es": "Tormenta prevista"
+          }
+        },
+        {
+          "key": "radio_blackout_probability",
+          "type": "number",
+          "label": {
+            "en": "Chance of R1–R2 (%)",
+            "fr": "Probabilité de R1–R2 (%)",
+            "de": "Wahrscheinlichkeit R1–R2 (%)",
+            "es": "Probabilidad de R1–R2 (%)"
+          }
+        },
+        {
+          "key": "major_radio_blackout_probability",
+          "type": "number",
+          "label": {
+            "en": "Chance of R3 or more (%)",
+            "fr": "Probabilité de R3 ou plus (%)",
+            "de": "Wahrscheinlichkeit R3+ (%)",
+            "es": "Probabilidad de R3 o más (%)"
+          }
+        },
+        {
+          "key": "radiation_storm_probability",
+          "type": "number",
+          "label": {
+            "en": "Chance of S1 or more (%)",
+            "fr": "Probabilité de S1 ou plus (%)",
+            "de": "Wahrscheinlichkeit S1+ (%)",
+            "es": "Probabilidad de S1 o más (%)"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary sentence",
+            "fr": "Phrase de résumé",
+            "de": "Zusammenfassung",
+            "es": "Frase de resumen"
+          }
+        }
+      ]
+    }
+  ]
+}

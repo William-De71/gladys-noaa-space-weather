@@ -1,0 +1,669 @@
+{
+  "devices": {
+    "global": {
+      "external_id": "ext:test-integration:space-weather:global",
+      "should_poll": false,
+      "features": [
+        {
+          "external_id": "ext:test-integration:space-weather:global:kp_estimated",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 9,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:kp",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 9,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:g_scale",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 5,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:s_scale",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 5,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:r_scale",
+          "category": "risk",
+          "type": "integer",
+          "min": 0,
+          "max": 5,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:solar_wind_speed",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 3000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:bz",
+          "category": "unknown",
+          "type": "unknown",
+          "min": -150,
+          "max": 150,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:bt",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 200,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:radio_flux",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 1000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:space-weather:global:xray_class",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "aurora": {
+      "external_id": "ext:test-integration:aurora:6f1c2d3e-0000-4000-8000-000000000001",
+      "should_poll": false,
+      "features": [
+        {
+          "external_id": "ext:test-integration:aurora:6f1c2d3e-0000-4000-8000-000000000001:probability",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:aurora:6f1c2d3e-0000-4000-8000-000000000001:night",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 1,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:aurora:6f1c2d3e-0000-4000-8000-000000000001:kp_tonight",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 9,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      },
+      {
+        "key": "aurora",
+        "type": "section"
+      },
+      {
+        "key": "aurora_threshold",
+        "type": "select"
+      }
+    ],
+    "actions": ["test_connection", "diagnostic"],
+    "action_fields": {
+      "test_connection": [],
+      "diagnostic": []
+    },
+    "widgets": [
+      {
+        "key": "overview",
+        "settings": [],
+        "options": {}
+      },
+      {
+        "key": "aurora",
+        "settings": ["device"],
+        "options": {}
+      },
+      {
+        "key": "alerts",
+        "settings": ["types", "days"],
+        "options": {
+          "types": ["watch", "warning", "alert", "summary"],
+          "days": ["1", "3", "7", "30"]
+        }
+      }
+    ],
+    "scene_triggers": [
+      {
+        "key": "geomagnetic_storm",
+        "fields": [
+          {
+            "key": "level",
+            "options": ["G1", "G2", "G3", "G4", "G5"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "level",
+            "type": "string"
+          },
+          {
+            "key": "level_number",
+            "type": "number"
+          },
+          {
+            "key": "previous_level",
+            "type": "string"
+          },
+          {
+            "key": "description",
+            "type": "string"
+          },
+          {
+            "key": "kp",
+            "type": "number"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "geomagnetic_storm_ended",
+        "fields": [],
+        "variables": [
+          {
+            "key": "max_level",
+            "type": "string"
+          },
+          {
+            "key": "max_level_number",
+            "type": "number"
+          },
+          {
+            "key": "duration_hours",
+            "type": "number"
+          },
+          {
+            "key": "kp",
+            "type": "number"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "radiation_storm",
+        "fields": [
+          {
+            "key": "level",
+            "options": ["S1", "S2", "S3", "S4", "S5"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "level",
+            "type": "string"
+          },
+          {
+            "key": "level_number",
+            "type": "number"
+          },
+          {
+            "key": "previous_level",
+            "type": "string"
+          },
+          {
+            "key": "description",
+            "type": "string"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "radio_blackout",
+        "fields": [
+          {
+            "key": "level",
+            "options": ["R1", "R2", "R3", "R4", "R5"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "level",
+            "type": "string"
+          },
+          {
+            "key": "level_number",
+            "type": "number"
+          },
+          {
+            "key": "previous_level",
+            "type": "string"
+          },
+          {
+            "key": "description",
+            "type": "string"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "solar_flare",
+        "fields": [
+          {
+            "key": "class_letter",
+            "options": ["M", "X"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "class",
+            "type": "string"
+          },
+          {
+            "key": "class_letter",
+            "type": "string"
+          },
+          {
+            "key": "begin_time",
+            "type": "string"
+          },
+          {
+            "key": "peak_time",
+            "type": "string"
+          },
+          {
+            "key": "end_time",
+            "type": "string"
+          },
+          {
+            "key": "peak_flux",
+            "type": "number"
+          },
+          {
+            "key": "radio_blackout",
+            "type": "string"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "aurora_possible",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "device",
+            "type": "string"
+          },
+          {
+            "key": "house",
+            "type": "string"
+          },
+          {
+            "key": "house_name",
+            "type": "string"
+          },
+          {
+            "key": "probability",
+            "type": "number"
+          },
+          {
+            "key": "threshold",
+            "type": "number"
+          },
+          {
+            "key": "kp",
+            "type": "number"
+          },
+          {
+            "key": "kp_tonight",
+            "type": "number"
+          },
+          {
+            "key": "observation_time",
+            "type": "string"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "aurora_ended",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "device",
+            "type": "string"
+          },
+          {
+            "key": "house",
+            "type": "string"
+          },
+          {
+            "key": "house_name",
+            "type": "string"
+          },
+          {
+            "key": "reason",
+            "type": "string"
+          },
+          {
+            "key": "max_probability",
+            "type": "number"
+          },
+          {
+            "key": "probability",
+            "type": "number"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "swpc_alert",
+        "fields": [
+          {
+            "key": "type",
+            "options": ["watch", "warning", "alert", "summary"]
+          },
+          {
+            "key": "topic",
+            "options": ["geomagnetic", "radiation", "radio", "other"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "type",
+            "type": "string"
+          },
+          {
+            "key": "topic",
+            "type": "string"
+          },
+          {
+            "key": "status",
+            "type": "string"
+          },
+          {
+            "key": "code",
+            "type": "string"
+          },
+          {
+            "key": "serial",
+            "type": "number"
+          },
+          {
+            "key": "title",
+            "type": "string"
+          },
+          {
+            "key": "headline",
+            "type": "string"
+          },
+          {
+            "key": "message",
+            "type": "string"
+          },
+          {
+            "key": "issue_time",
+            "type": "string"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "storm_forecast",
+        "fields": [],
+        "variables": [
+          {
+            "key": "level",
+            "type": "string"
+          },
+          {
+            "key": "level_number",
+            "type": "number"
+          },
+          {
+            "key": "max_kp",
+            "type": "number"
+          },
+          {
+            "key": "start_time",
+            "type": "string"
+          },
+          {
+            "key": "end_time",
+            "type": "string"
+          },
+          {
+            "key": "hours_until",
+            "type": "number"
+          },
+          {
+            "key": "sentence",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "get_space_weather",
+        "fields": [],
+        "outputs": [
+          {
+            "key": "kp",
+            "type": "number"
+          },
+          {
+            "key": "kp_official",
+            "type": "number"
+          },
+          {
+            "key": "g_scale",
+            "type": "number"
+          },
+          {
+            "key": "s_scale",
+            "type": "number"
+          },
+          {
+            "key": "r_scale",
+            "type": "number"
+          },
+          {
+            "key": "solar_wind_speed",
+            "type": "number"
+          },
+          {
+            "key": "bz",
+            "type": "number"
+          },
+          {
+            "key": "bt",
+            "type": "number"
+          },
+          {
+            "key": "radio_flux",
+            "type": "number"
+          },
+          {
+            "key": "xray_class",
+            "type": "string"
+          },
+          {
+            "key": "last_flare_class",
+            "type": "string"
+          },
+          {
+            "key": "last_flare_time",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "get_aurora",
+        "fields": ["device"],
+        "outputs": [
+          {
+            "key": "house_name",
+            "type": "string"
+          },
+          {
+            "key": "probability",
+            "type": "number"
+          },
+          {
+            "key": "possible",
+            "type": "boolean"
+          },
+          {
+            "key": "dark",
+            "type": "boolean"
+          },
+          {
+            "key": "dark_start",
+            "type": "string"
+          },
+          {
+            "key": "dark_end",
+            "type": "string"
+          },
+          {
+            "key": "kp_tonight",
+            "type": "number"
+          },
+          {
+            "key": "threshold",
+            "type": "number"
+          },
+          {
+            "key": "observation_time",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "get_forecast",
+        "fields": [],
+        "outputs": [
+          {
+            "key": "kp_max_today",
+            "type": "number"
+          },
+          {
+            "key": "kp_max_tomorrow",
+            "type": "number"
+          },
+          {
+            "key": "kp_max_day_after",
+            "type": "number"
+          },
+          {
+            "key": "g_max",
+            "type": "string"
+          },
+          {
+            "key": "storm_expected",
+            "type": "boolean"
+          },
+          {
+            "key": "radio_blackout_probability",
+            "type": "number"
+          },
+          {
+            "key": "major_radio_blackout_probability",
+            "type": "number"
+          },
+          {
+            "key": "radiation_storm_probability",
+            "type": "number"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

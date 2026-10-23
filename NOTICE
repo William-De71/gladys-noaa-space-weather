@@ -1,0 +1,16 @@
+Gladys NOAA Space Weather integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It reads the public data of the Space Weather Prediction Center (SWPC) of the
+U.S. National Oceanic and Atmospheric Administration (NOAA), at
+https://services.swpc.noaa.gov/. Those data are in the public domain; the
+SWPC asks to be credited as "NOAA Space Weather Prediction Center". This
+integration is not affiliated with nor endorsed by the NOAA or the SWPC, and
+uses neither their name as a brand nor their logo.
+
+The sun elevation follows the published equations of the NOAA solar
+calculator (https://gml.noaa.gov/grad/solcalc/calcdetails.html). The test
+fixtures under test/fixtures/swpc/ are files of the SWPC downloaded on
+2026-10-23 (public domain).
