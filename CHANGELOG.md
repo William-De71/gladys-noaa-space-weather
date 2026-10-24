@@ -5,6 +5,12 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
+## [0.1.1] - 2026-10-24
+
+### Security
+
+- **security:** build the image on Node.js 24.22.1 or later ([266aafd](https://github.com/William-De71/gladys-noaa-space-weather/commit/266aafde7558469b6de672134ab82542ae6bdd56))
+
 ## [0.1.0] - 2026-10-23
 
 ### Added
@@ -16,4 +22,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - **configuration:** language of the texts, aurora threshold, a "Test the connection" button and a "Diagnostic" button
 - **i18n:** English, French, German and Spanish for the manifest, the runtime texts, the documentation and the README
 
+[0.1.1]: https://github.com/William-De71/gladys-noaa-space-weather/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/William-De71/gladys-noaa-space-weather/releases/tag/v0.1.0
