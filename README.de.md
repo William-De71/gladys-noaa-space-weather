@@ -5,7 +5,7 @@
 [![Lizenz: Apache-2.0](https://img.shields.io/badge/Lizenz-Apache--2.0-blue.svg)](LICENSE)
 [![Neueste Version](https://img.shields.io/github/v/release/William-De71/gladys-noaa-space-weather?sort=semver)](https://github.com/William-De71/gladys-noaa-space-weather/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/William-De71/gladys-noaa-space-weather/release.yml?branch=main&label=CI)](https://github.com/William-De71/gladys-noaa-space-weather/actions/workflows/release.yml)
-[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.1.0-2f6fb5)](https://gladysassistant.com)
+[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.3.0-2f6fb5)](https://gladysassistant.com)
 
 ![NOAA Space Weather für Gladys Assistant](cover.jpg)
 
@@ -108,7 +108,7 @@ Jeder Auslöser liefert `{{triggerEvent.data.sentence}}`, einen Satz in der Spra
 
 ## Voraussetzungen
 
-- Gladys Assistant **5.1.0** oder neuer (Widgets und Szenen der Integrationen): Ältere Instanzen können die Integration nicht installieren.
+- Gladys Assistant **5.3.0** oder neuer (Widgets und Szenen der Integrationen, Katalog-Suchbegriffe von Gladys 5.3): Ältere Instanzen können die Integration nicht installieren.
 - Internet: Die Integration spricht nur mit `services.swpc.noaa.gov`.
 - Für Polarlicht: ein Zuhause mit Standort in Gladys (die Integration deklariert `location: true`, um ihn zu lesen).
 

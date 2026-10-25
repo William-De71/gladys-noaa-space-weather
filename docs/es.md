@@ -10,7 +10,7 @@ Transporte: nube. La integración lee archivos públicos en `services.swpc.noaa.
 
 ## Requisitos previos
 
-- Gladys 5.1.0 o posterior (widgets y disparadores de escena).
+- Gladys 5.3.0 o posterior (widgets y disparadores de escena).
 - Para las auroras: una vivienda con ubicación (Configuración → Viviendas). La integración pide acceso a las coordenadas de las viviendas al instalarla.
 - La latitud importa. Por debajo de unos 55° de latitud magnética, como en España, una aurora es rara: solo las tormentas fuertes (G3 o más, unas pocas veces por ciclo solar) la traen tan al sur. En Escandinavia, Islandia, Canadá o Alaska es frecuente.
 

@@ -62,8 +62,8 @@ test('declares the cloud transport: services.swpc.noaa.gov only, no key', () => 
   );
 });
 
-test('Gladys 5.1.0: widgets and scenes; the houses read with `location`, chosen through their devices', () => {
-  assert.equal(manifest.gladys_version, '>=5.1.0');
+test('Gladys 5.3.0: widgets, scenes, catalog keywords; the houses read with `location`, chosen through their devices', () => {
+  assert.equal(manifest.gladys_version, '>=5.3.0');
   assert.deepEqual(manifest.categories, ['environment']);
   assert.equal(manifest.location, true, 'getHouses() for the Aurora devices');
   assert.match(source('../src/app.js'), /gladys\.getHouses\(\)/);
@@ -160,4 +160,18 @@ test('limits of the store: counts, timeouts, sizes', () => {
   const cover = readFileSync(new URL('../cover.jpg', import.meta.url));
   assert.ok(cover.length < 150 * 1024, `cover.jpg: ${cover.length} bytes`);
   assert.equal(cover.readUInt16BE(0), 0xffd8);
+});
+
+test('catalog search terms and countries, which need Gladys 5.3.0', () => {
+  assert.equal(manifest.gladys_version, '>=5.3.0');
+  assert.ok(Array.isArray(manifest.keywords));
+  assert.ok(manifest.keywords.length >= 1 && manifest.keywords.length <= 10);
+  const terms = manifest.keywords.map((keyword) => keyword.trim().toLowerCase());
+  for (const [index, term] of terms.entries()) {
+    assert.ok(term.length >= 2 && manifest.keywords[index].length <= 30, term);
+  }
+  assert.equal(new Set(terms).size, terms.length, 'unique once trimmed and lowercased');
+  assert.ok(!terms.includes(manifest.name.toLowerCase()), 'the name is already searched');
+  // Usable anywhere: no country filter in the catalog.
+  assert.equal(manifest.countries, undefined);
 });

@@ -10,7 +10,7 @@ Transport : cloud. L’intégration lit des fichiers publics sur `services.swpc.
 
 ## Prérequis
 
-- Gladys 5.1.0 ou plus récent (widgets et déclencheurs de scène).
+- Gladys 5.3.0 ou plus récent (widgets et déclencheurs de scène).
 - Pour les aurores : une maison localisée (Paramètres → Maisons). L’intégration demande l’accès aux coordonnées des maisons à l’installation.
 - La latitude compte. Sous 55° de latitude magnétique environ, comme dans la plupart de la France, une aurore est rare : seuls les orages forts (G3 ou plus, quelques fois par cycle solaire) la font descendre aussi bas. En Scandinavie, en Islande, au Canada ou en Alaska, elle est fréquente.
 

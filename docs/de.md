@@ -10,7 +10,7 @@ Transport: Cloud. Die Integration liest öffentliche Dateien auf `services.swpc.
 
 ## Voraussetzungen
 
-- Gladys 5.1.0 oder neuer (Widgets und Szenen-Auslöser).
+- Gladys 5.3.0 oder neuer (Widgets und Szenen-Auslöser).
 - Für Polarlicht: ein Zuhause mit Standort (Einstellungen → Zuhause). Die Integration fragt bei der Installation nach den Koordinaten der Zuhause.
 - Die Breite zählt. Unterhalb von etwa 55° magnetischer Breite, wie im Großteil Deutschlands, ist Polarlicht selten: Nur starke Stürme (G3 oder mehr, einige Male pro Sonnenzyklus) bringen es so weit nach Süden. In Skandinavien, Island, Kanada oder Alaska ist es häufig.
 

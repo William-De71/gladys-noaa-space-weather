@@ -10,7 +10,7 @@ Transport: cloud. The integration reads public files on `services.swpc.noaa.gov`
 
 ## Prerequisites
 
-- Gladys 5.1.0 or later (widgets and scene triggers).
+- Gladys 5.3.0 or later (widgets and scene triggers).
 - For the aurora: a house with a location (Settings → Houses). The integration asks for the coordinates of the houses at installation.
 - Latitude matters. Below about 55° of magnetic latitude, as in most of France, an aurora is rare: only strong storms (G3 or more, a few times per solar cycle) bring it that far south. In Scandinavia, Iceland, Canada or Alaska it is common.
 

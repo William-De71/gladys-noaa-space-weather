@@ -5,7 +5,7 @@
 [![Licencia: Apache-2.0](https://img.shields.io/badge/licencia-Apache--2.0-blue.svg)](LICENSE)
 [![Última versión](https://img.shields.io/github/v/release/William-De71/gladys-noaa-space-weather?sort=semver)](https://github.com/William-De71/gladys-noaa-space-weather/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/William-De71/gladys-noaa-space-weather/release.yml?branch=main&label=CI)](https://github.com/William-De71/gladys-noaa-space-weather/actions/workflows/release.yml)
-[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.1.0-2f6fb5)](https://gladysassistant.com)
+[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.3.0-2f6fb5)](https://gladysassistant.com)
 
 ![NOAA Space Weather para Gladys Assistant](cover.jpg)
 
@@ -108,7 +108,7 @@ Cada disparador ofrece `{{triggerEvent.data.sentence}}`, una frase en el idioma 
 
 ## Requisitos
 
-- Gladys Assistant **5.1.0** o posterior (widgets y escenas de las integraciones): las instancias anteriores no pueden instalar la integración.
+- Gladys Assistant **5.3.0** o posterior (widgets y escenas de las integraciones, palabras clave del catálogo de Gladys 5.3): las instancias anteriores no pueden instalar la integración.
 - Internet: la integración solo habla con `services.swpc.noaa.gov`.
 - Para las auroras: una vivienda con ubicación en Gladys (la integración declara `location: true` para leerla).
 
