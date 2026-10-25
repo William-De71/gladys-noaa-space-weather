@@ -1,6 +1,6 @@
 {
   "name": "gladys-noaa-space-weather",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "description": "External Gladys Assistant integration for the space weather of the NOAA SWPC: Kp index, NOAA scales, solar wind, flares, aurora forecast per house, SWPC alerts, scene triggers, dashboard widgets (not affiliated with NOAA).",
   "homepage": "https://github.com/William-De71/gladys-noaa-space-weather",
